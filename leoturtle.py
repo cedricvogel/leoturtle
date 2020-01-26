@@ -160,3 +160,6 @@ class Turtle():
     def hideturtle(self):
         self.turtleVisible = False
         self.turtle_draw()
+
+    def speed(self, speed):
+        self.turtleSpeed = 5*speed
