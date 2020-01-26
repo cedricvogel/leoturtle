@@ -19,6 +19,7 @@ class Turtle():
         self.turtleVisible = True
         self.turtleSize = 5
         self.turtleCanvas.fill_style = 'red'
+        self.turtleSpeed = 5  # speed in pixels per refresh cycle
         # self.canvas.fill_style = 'red'
         # self.fillCanvas.fill_style = 'red'
 
@@ -34,6 +35,17 @@ class Turtle():
         return self.multicanvas
 
     def forward(self, distance):
+        step = self.turtleSpeed
+        if distance < 0:
+            step = - self.turtleSpeed
+        stepsum = 0
+        while abs(stepsum+step) <= abs(distance):
+            self.forward_step(step)
+            stepsum += step
+        if abs(stepsum) < abs(distance):
+            self.forward(distance-stepsum)
+
+    def forward_step(self, distance):
         self.canvas.begin_path()
         self.canvas.move_to(*self.position)
         delta_x = round(distance*math.sin(math.radians(self.heading)))
