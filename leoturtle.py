@@ -71,6 +71,19 @@ class Turtle():
         self.turtle_draw()
 
     def circle(self, radius, angle=360, direction=1):
+        step = int(self.turtleSpeed*180/(math.pi*radius))
+        if step == 0:
+            step = 1
+        if angle < 0:
+            step = - step
+        stepsum = 0
+        while abs(stepsum+step) <= abs(angle):
+            self.circle_step(radius, step, direction)
+            stepsum += step
+        if abs(stepsum) < abs(angle):
+            self.circle_step(radius, angle-stepsum, direction)
+
+    def circle_step(self, radius, angle=360, direction=1):
         angle = int(angle)
         distance = 2*radius*math.tan(math.radians(0.5))
         self.canvas.begin_path()
@@ -139,7 +152,6 @@ class Turtle():
     def fillcolor(self, color):
         self.fillCanvas.fill_style = color
         self.canvas.fill_style = color
-        print(self.canvas.fill_style)
 
     def showturtle(self):
         self.turtleVisible = True
