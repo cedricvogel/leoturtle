@@ -1,0 +1,11 @@
+name: leoturtle
+channels:
+  - conda-forge
+dependencies:
+  - jupyterlab
+  - ipywidgets
+  - IPython
+  - numpy
+  - matplotlib
+  - ipycanvas
+  - nodejs
