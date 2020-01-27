@@ -48,8 +48,8 @@ class Turtle():
     def forward_step(self, distance):
         self.canvas.begin_path()
         self.canvas.move_to(*self.position)
-        delta_x = round(distance*math.sin(math.radians(self.heading)))
-        delta_y = round(distance*math.cos(math.radians(self.heading)))
+        delta_x = distance*math.sin(math.radians(self.heading))
+        delta_y = distance*math.cos(math.radians(self.heading))
         self.position[0] += delta_x
         self.position[1] += delta_y
         if self.pen:
