@@ -1,4 +1,4 @@
-name: leoturtle2
+name: leoturtle
 channels:
   - conda-forge
 dependencies:
