@@ -163,3 +163,7 @@ class Turtle():
 
     def speed(self, speed):
         self.turtleSpeed = 5*speed
+
+    def clear(self):
+        self.canvas.clear()
+        self.fillCanvas.clear()
