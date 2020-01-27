@@ -1,4 +1,4 @@
-name: leoturtle
+name: leoturtle2
 channels:
   - conda-forge
 dependencies:
@@ -8,6 +8,4 @@ dependencies:
   - numpy
   - matplotlib
   - nodejs
-  - pip
-  - pip:
-    - ipycanvas
+  - ipycanvas
