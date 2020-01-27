@@ -21,3 +21,20 @@ inside the leoturtle folder run
 conda env create -f enviromnt.yml
 ```
 
+You can now activate the conda environment including all the dependencies with
+
+```bash
+conda activate leoturtle
+```
+
+If you want to use jupyterlab you will have to install the extension for ipycanvas.
+
+```bash
+jupyter labextension install @jupyter-widgets jupyterlab-manager ipycanvas
+```
+
+You can now use jupyterlab with 
+
+```bash
+jupyter lab
+```
