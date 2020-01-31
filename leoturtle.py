@@ -49,6 +49,9 @@ class Turtle():
         if abs(stepsum) < abs(distance):
             self.forward(distance-stepsum)
 
+    def fd(self, distance):
+        self.forward(distance)
+
     def forward_step(self, distance):
         self.canvas.begin_path()
         self.canvas.move_to(*self.position)
@@ -66,13 +69,21 @@ class Turtle():
     def back(self, distance):
         self.forward(-distance)
 
+    def bk(self, distance):
+        self.back(distance)
+
     def left(self, angle):
         self.heading = (self.heading + angle) % 360
         self.turtle_draw()
 
+    def lt(self, angle):
+        self.lt(angle)
+
     def right(self, angle):
         self.left(-angle)
-        self.turtle_draw()
+
+    def rt(self, angle):
+        self.right(angle)
 
     def circle(self, radius, angle=360, direction=1):
         step = int(self.turtleSpeed*180/(math.pi*radius))
@@ -168,6 +179,9 @@ class Turtle():
     def speed(self, speed):
         self.turtleSpeed = 5*speed
 
-    def clear(self):
+    def clearScreen(self):
         self.canvas.clear()
         self.fillCanvas.clear()
+
+    def cs(self):
+        self.clearScreen()
