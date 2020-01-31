@@ -15,7 +15,7 @@ class Turtle():
         self.fill = False
         self.center = [200, 200]
         self.position = [200, 200]
-        self.heading = 0
+        self.heading = 180
         self.pen = True
         self.turtleVisible = True
         self.turtleSize = 5
