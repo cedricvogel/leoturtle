@@ -5,16 +5,32 @@ from ipywidgets import Color
 from sidecar import Sidecar
 
 
+class TurtleScreen():
+    def __init__(self, width=400, height=400):
+        self.multicanvas = MultiCanvas(4, width=width, height=height)
+        self.turtleCanvas = self.multicanvas[3]
+        self.sc = Sidecar(title="Turtle Screen")
+        with self.sc:
+            display(self.multicanvas)
+        self.turtles = []
+
+    def draw(self):
+        self.turtleCanvas.clear()
+        for turtle in self.turtles:
+            turtle.draw_turtle()
+
+
 class Turtle():
-    def __init__(self):
-        self.multicanvas = MultiCanvas(4, width=400, height=400)
+    def __init__(self, screen=TurtleScreen()):
+        self.screen = screen
+        self.multicanvas = screen.multicanvas
         self.background = self.multicanvas[0]
         self.canvas = self.multicanvas[1]
         self.fillCanvas = self.multicanvas[2]
         self.turtleCanvas = self.multicanvas[3]
         self.fill = False
-        self.center = [200, 200]
-        self.position = [200, 200]
+        self.center = (self.canvas.width/2, self.canvas.height/2)
+        self.position = list(self.center)
         self.heading = 180
         self.pen = True
         self.turtleVisible = True
@@ -23,20 +39,14 @@ class Turtle():
         self.turtleSpeed = 5  # speed in pixels per refresh cycle
         # self.canvas.fill_style = 'red'
         # self.fillCanvas.fill_style = 'red'
-        self.sc = Sidecar(title="Turtle Screen")
-        with self.sc:
-            display(self.draw())
+        self.screen.turtles.append(self)
+        self.screen.draw()
 
-    def turtle_draw(self):
-        self.turtleCanvas.clear()
+    def draw_turtle(self):
         self.turtleCanvas.move_to(*self.position)
         if self.turtleVisible:
             self.turtleCanvas.fill_arc(
                 self.position[0], self.position[1], self.turtleSize, 0, 2*math.pi)
-
-    def draw(self):
-        self.turtle_draw()
-        return self.multicanvas
 
     def forward(self, distance):
         step = self.turtleSpeed
@@ -64,7 +74,7 @@ class Turtle():
         if self.fill:
             self.fillCanvas.line_to(*self.position)
         self.canvas.stroke()
-        self.turtle_draw()
+        self.screen.draw()
 
     def back(self, distance):
         self.forward(-distance)
@@ -74,10 +84,10 @@ class Turtle():
 
     def left(self, angle):
         self.heading = (self.heading + angle) % 360
-        self.turtle_draw()
+        self.screen.draw()
 
     def lt(self, angle):
-        self.lt(angle)
+        self.left(angle)
 
     def right(self, angle):
         self.left(-angle)
@@ -112,7 +122,7 @@ class Turtle():
             if self.fill:
                 self.fillCanvas.line_to(*self.position)
         self.canvas.stroke()
-        self.turtle_draw()
+        self.screen.draw()
 
     def leftArc(self, radius, angle):
         self.circle(radius, angle=angle)
@@ -122,22 +132,24 @@ class Turtle():
 
     def goto(self, x, y):
         self.canvas.move_to(x, y)
-        self.turtle_draw()
+        self.screen.draw()
 
     def setx(self, x):
         self.canvas.move_to(x, self.position[1])
-        self.turtle_draw()
+        self.screen.draw()
 
     def sety(self, y):
         self.goto(self.position[0], y)
-        self.turtle_draw()
+        self.screen.draw()
 
     def setheading(self, angle):
         self.angle = angle
-        self.turtle_draw()
+        self.screen.draw()
 
     def home(self):
-        self.goto(self.center[0], self.center[1])
+        self.position = list(self.center)
+        self.heading = 180
+        self.screen.draw()
 
     def begin_fill(self):
         self.fill = True
@@ -170,11 +182,11 @@ class Turtle():
 
     def showturtle(self):
         self.turtleVisible = True
-        self.turtle_draw()
+        self.screen.draw()
 
     def hideturtle(self):
         self.turtleVisible = False
-        self.turtle_draw()
+        self.screen.draw()
 
     def speed(self, speed):
         self.turtleSpeed = 5*speed
@@ -182,6 +194,9 @@ class Turtle():
     def clearScreen(self):
         self.canvas.clear()
         self.fillCanvas.clear()
+        self.position = list(self.center)
+        self.heading = 180
+        self.screen.draw()
 
     def cs(self):
         self.clearScreen()
