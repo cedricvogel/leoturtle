@@ -9,3 +9,6 @@ dependencies:
   - matplotlib
   - nodejs
   - ipycanvas
+  - pip
+  - pip:
+    - sidecar

@@ -2,6 +2,7 @@
 from ipycanvas import MultiCanvas
 import math
 from ipywidgets import Color
+from sidecar import Sidecar
 
 
 class Turtle():
@@ -22,6 +23,9 @@ class Turtle():
         self.turtleSpeed = 5  # speed in pixels per refresh cycle
         # self.canvas.fill_style = 'red'
         # self.fillCanvas.fill_style = 'red'
+        self.sc = Sidecar(title="Turtle Screen")
+        with self.sc:
+            display(self.draw())
 
     def turtle_draw(self):
         self.turtleCanvas.clear()
